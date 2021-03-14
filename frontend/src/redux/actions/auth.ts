@@ -47,13 +47,8 @@ export const register = (registerData: RegisterData) => async (
   return dispatch(setMessage(data.message, status));
 };
 
-export const refresh = (firstCheck = false) => async (
-  dispatch: AppThunkDispatch
-) => {
-  const { data } = await axios.get<{
-    message: string;
-    accessToken: string;
-  }>(`/auth/refresh`, { params: { firstCheck } });
+export const refresh = async (dispatch: AppThunkDispatch) => {
+  const { data } = await axios.get(`/auth/refresh?firstCheck=true`);
 
   if (data?.accessToken) return dispatch(authSuccess(data.accessToken));
 

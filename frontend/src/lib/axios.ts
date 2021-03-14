@@ -1,14 +1,12 @@
 import Axios from 'axios';
 import { store } from '../redux/index';
-import { authSuccess, logout } from '@actions';
-
-const url = process.env.REACT_APP_BACKEND_URL;
+import { authSuccess, logoutAction } from '@actions';
 
 const ax = Axios.create({
   withCredentials: true,
   xsrfCookieName: '_csrf',
   xsrfHeaderName: 'X-XSRF-TOKEN',
-  baseURL: url,
+  baseURL: process.env.REACT_APP_BACKEND_URL,
 });
 
 const rejectPromise = (error: Record<string, any> | string) =>
@@ -30,31 +28,30 @@ ax.interceptors.response.use(
   error => {
     const originalRequest = error.config;
     const errorStatus = error.response?.status;
-    const refreshUrl = `${url}/auth/refresh`;
+    const refreshUrl = `/auth/refresh`;
 
     if (errorStatus === 401 && originalRequest.url === refreshUrl) {
-      store.dispatch<any>(logout);
+      store.dispatch(logoutAction());
       return rejectPromise(error.response);
     }
 
     if (errorStatus === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       return axios
-        .get('/auth/refresh', { params: { firstCheck: false } })
+        .get('/auth/refresh')
         .then(res => {
-          if (res.data.accessToken) {
-            const { accessToken } = res.data;
-            // dispatch refresh success
-            originalRequest.headers = {
-              ...originalRequest.headers,
-              Authorization: `Bearer ${accessToken}`,
-            };
-            store.dispatch(authSuccess(accessToken));
-            // return originalRequest object with Axios.
-            return axios(originalRequest);
-          }
-
-          store.dispatch<any>(logout);
+          const { accessToken } = res.data;
+          // dispatch refresh success
+          originalRequest.headers = {
+            ...originalRequest.headers,
+            Authorization: `Bearer ${accessToken}`,
+          };
+          store.dispatch(authSuccess(accessToken));
+          // return originalRequest object with Axios.
+          return axios(originalRequest);
+        })
+        .catch(error => {
+          store.dispatch(logoutAction());
 
           return rejectPromise(error.response);
         });

@@ -10,11 +10,16 @@ import Nav from './components/nav';
 import Routes from './routes';
 import { Container } from './styled/components';
 
+let checked = false;
+
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(refresh(true));
+    if (!checked) {
+      checked = true;
+      dispatch(refresh);
+    }
   }, [dispatch]);
 
   return (

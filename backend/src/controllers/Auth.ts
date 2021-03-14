@@ -42,6 +42,9 @@ export const refresh = async (
 
     return res.status(HTTPCodes.OK).json({ accessToken });
   } catch (error) {
+    if (req.query.firstCheck === 'true') {
+      return res.status(HTTPCodes.OK).json();
+    }
     return next(error);
   }
 };

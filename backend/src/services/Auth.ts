@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '../utils/exceptions';
 import { JWTService } from './JWT';
 import { Response } from 'express';
@@ -42,19 +43,19 @@ export const login = async (body: Body, res: Response) => {
 };
 
 export const refresh = async (token: string, res: Response) => {
-  try {
-    const { id } = (await JWTService.verifyToken(token, true)) as {
-      id: string;
-    };
+  const { id } = (await JWTService.verifyToken(token, true)) as {
+    id: string;
+  };
 
-    const tokenObj = { id };
+  const user = await UserRepository.getById(id);
 
-    CookieService.setRefreshToken(res, JWTService.signToken(tokenObj, true));
+  if (!user) throw new UnauthorizedException();
 
-    return { accessToken: JWTService.signToken(tokenObj) };
-  } catch {
-    throw new BadRequestException('Token expired...');
-  }
+  const tokenObj = { id };
+
+  CookieService.setRefreshToken(res, JWTService.signToken(tokenObj, true));
+
+  return { accessToken: JWTService.signToken(tokenObj) };
 };
 
 export const logout = (res: Response) => CookieService.removeRefreshToken(res);
