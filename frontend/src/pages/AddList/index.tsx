@@ -30,6 +30,7 @@ import {
   Item,
   AddItemButton,
   SubmitButton,
+  ErrorParagraph,
 } from './styled';
 import Input from '@components/input';
 import SweetAlert from '@components/alert';
@@ -44,18 +45,18 @@ const reduxProps = createSelector(
   (state: AppState) => state.list.message,
   (state: AppState) => state.list.status,
   (state: AppState) => state.list.list,
-  (errors, message, status, list) => ({
-    errors,
-    message,
-    status,
-    list,
-  })
+  (...props) => props
 );
+
+const errorMessages = [
+  'Shopping list does not exist',
+  'You do not have permission to get this list',
+];
 
 const AddList = () => {
   const itemsRef = useRef<HTMLDivElement>(null);
   const dispatch = useThunkDispatch();
-  const { errors, message, status, list } = useSelector(reduxProps);
+  const [errors, message, status, list] = useSelector(reduxProps);
   const [items, setItems] = useState<ItemInterface[]>([]);
   const { id } = useParams() as { id: string | undefined };
 
@@ -162,6 +163,14 @@ const AddList = () => {
       setItems(list.items);
     }
   }, [id, list]);
+
+  if (id && errorMessages.includes(message)) {
+    return (
+      <Wrapper>
+        <ErrorParagraph>{message}</ErrorParagraph>
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>

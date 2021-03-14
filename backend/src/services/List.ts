@@ -13,7 +13,10 @@ export const addList = async (data: Partial<ListInterface>) => {
 export const updateList = async (data: ListInterface, id: string) => {
   const list = await ListRepository.getById(id);
 
-  if (!list) throw new BadRequestException('List does not exist');
+  if (!list) {
+    throw new BadRequestException('Shopping list does not exist');
+  }
+
   if (list.userId.toString() !== data.userId) {
     throw new BadRequestException(
       'You do not have permission to update this list'
@@ -22,7 +25,7 @@ export const updateList = async (data: ListInterface, id: string) => {
 
   const updateValues = {} as Partial<ListInterface>;
 
-  if(list.name !== data.name) {
+  if (list.name !== data.name) {
     updateValues.name = data.name;
   }
 
@@ -54,6 +57,10 @@ export const getLists = async (userId: string, skip = '0') => {
 export const getList = async (userId: string, id: string) => {
   const list = await ListRepository.getById(id);
 
+  if (!list) {
+    throw new BadRequestException('Shopping list does not exist');
+  }
+
   if (list.userId.toString() !== userId) {
     throw new BadRequestException(
       'You do not have permission to get this list'
@@ -65,6 +72,10 @@ export const getList = async (userId: string, id: string) => {
 
 export const deleteList = async (userId: string, id: string) => {
   const list = await ListRepository.getById(id);
+
+  if (!list) {
+    throw new BadRequestException('Shopping list does not exist');
+  }
 
   if (list.userId.toString() !== userId) {
     throw new BadRequestException(

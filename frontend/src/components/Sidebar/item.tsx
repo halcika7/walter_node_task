@@ -60,6 +60,10 @@ const CustomizedLink = styled(NavLink)<{ active?: string }>`
         > g > g > path {
           fill: ${props => props.theme.colors.white};
         }
+
+        path {
+          fill: ${props => props.theme.colors.white};
+        }
       }
     `};
 `;

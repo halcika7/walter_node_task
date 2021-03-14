@@ -6,6 +6,7 @@ export const Wrapper = styled.section`
   ${setMarginPadding('0 0 2rem', '32px')}
   box-shadow: ${props => props.theme.boxShadow};
   position: relative;
+  min-height: 500px;
 
   h1 {
     margin: 0 0 2rem;
@@ -85,4 +86,13 @@ export const SubmitButton = styled(AddItemButton)`
   background: #aaf0d1;
   margin-top: 2rem;
   color: #111;
+`;
+
+export const ErrorParagraph = styled.p`
+  text-align: center;
+  padding: 2rem;
+  background: tomato;
+  color: ${props => props.theme.colors.white};
+  margin: auto 0;
+  box-shadow: ${props => props.theme.boxShadow};
 `;
