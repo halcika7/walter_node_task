@@ -51,11 +51,7 @@ const Register = () => {
   };
 
   const form = useForm({
-    initialValues: {
-      email: '',
-      password: '',
-      password2: '',
-    },
+    initialValues: { email: '', password: '', password2: '' },
     onSubmit,
     enableReinitialize: true,
     validationSchema: UserRegister,
@@ -67,9 +63,7 @@ const Register = () => {
   const RegisterImage = !value ? RegisterLight : RegisterDark;
 
   useEffect(() => {
-    if (status === 201) {
-      history.push('/login');
-    }
+    if (status === 201) history.push('/login');
   }, [status, history]);
 
   useEffect(() => {

@@ -30,7 +30,7 @@ ___
 ## Installation
 
 ```
-git clone git@github.com:halcika7/softhouse-app.git folder-name
+git clone git@github.com:halcika7/walter_node_task.git folder-name
 cd path/to/folder
 <!-- The bash script will work for Linux and Mac users -->
 <!-- For Windows, go and rename all .env.example files to .env -->

@@ -53,9 +53,7 @@ const Lists = () => {
     dispatch(deleteList(id));
   };
 
-  const resetMessage = () => {
-    dispatch(setListMessage('', null));
-  };
+  const resetMessage = () => dispatch(setListMessage('', null));
 
   const loadMore = () => {
     if (loading || lists.length >= numberOfLists) return;
@@ -65,16 +63,13 @@ const Lists = () => {
   useEffect(() => {
     dispatch(getTotalNumberOfLists);
     dispatch(getLists(0));
-
     return () => {
       dispatch(resetListState());
     };
   }, [dispatch]);
 
   useEffect(() => {
-    if (status) {
-      setIsDeleting(false);
-    }
+    if (status) setIsDeleting(false);
   }, [status]);
 
   return (

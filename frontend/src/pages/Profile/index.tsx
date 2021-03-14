@@ -37,10 +37,7 @@ const Profile = () => {
   };
 
   const form = useForm({
-    initialValues: {
-      password: '',
-      password2: '',
-    },
+    initialValues: { password: '', password2: '' },
     onSubmit,
     enableReinitialize: true,
     validationSchema: PasswordSchema,

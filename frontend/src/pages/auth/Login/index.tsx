@@ -1,5 +1,4 @@
 // hooks
-// import { useCallback, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -49,10 +48,7 @@ const Login = () => {
   };
 
   const form = useForm({
-    initialValues: {
-      email: '',
-      password: '',
-    },
+    initialValues: { email: '', password: '' },
     onSubmit,
     enableReinitialize: true,
   });
@@ -60,9 +56,7 @@ const Login = () => {
   const LoginImage = !value ? LoginLight : LoginDark;
 
   useEffect(() => {
-    if (form.isSubmitting) {
-      form.setSubmitting(false);
-    }
+    if (form.isSubmitting) form.setSubmitting(false);
   }, [message, status, form]);
 
   useEffect(() => {

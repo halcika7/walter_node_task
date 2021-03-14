@@ -103,6 +103,7 @@ export const getLists = (skip: number, loadMore = false) => async (
 
 export const getList = (id: string) => async (dispatch: AppThunkDispatch) => {
   const { data, status } = await axios.get(`/list/${id}`);
+
   if (data.list) {
     dispatch({
       type: ListTypes.SET_LIST,
@@ -118,22 +119,17 @@ export const deleteList = (id: string) => async (
   getState: () => void
 ) => {
   const { data, status } = await axios.delete(`/list/${id}`);
+
   dispatch(setListMessage(data.message, status));
 
   if (status === 200) {
-    const newLists = ((getState() as unknown) as AppState).list.lists.filter(
-      (item: List) => item._id !== id
-    );
+    const { lists, numberOfLists } = ((getState() as unknown) as AppState).list;
+    const newLists = lists.filter((item: List) => item._id !== id);
     dispatch({
       type: ListTypes.SET_NUMBER_OF_LISTS,
-      payload: {
-        numberOfLists: ((getState() as unknown) as AppState).list.numberOfLists,
-      },
+      payload: { numberOfLists: numberOfLists - 1 },
     });
-    dispatch({
-      type: ListTypes.SET_LISTS,
-      payload: { lists: newLists },
-    });
+    dispatch({ type: ListTypes.SET_LISTS, payload: { lists: newLists } });
   }
 };
 
@@ -143,6 +139,7 @@ export const getReport = (dates: { startDate: Date; endDate: Date }) => async (
   dispatch({ type: ListTypes.SET_LOADING, payload: { loading: true } });
 
   const { data, status } = await axios.get(`/list/report`, { params: dates });
+
   dispatch(setListMessage(data.message, status));
   dispatch({
     type: ListTypes.SET_REPORT,

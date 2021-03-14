@@ -57,7 +57,6 @@ export const refresh = async (dispatch: AppThunkDispatch) => {
 
 export const logout = async (dispatch: AppThunkDispatch) => {
   await axios.post('/auth/logout');
-
   return dispatch(logoutAction());
 };
 

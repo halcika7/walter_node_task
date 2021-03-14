@@ -104,9 +104,10 @@ const AddList = () => {
 
   const addItem = () => {
     const itms = [...form.values.items];
-    setItems(prev => [...prev, { name: '', qty: 1, uuid: uuidv4() }]);
+    const item = { name: '', qty: 1, uuid: uuidv4() };
+    setItems(prev => [...prev, item]);
 
-    itms.push({ name: '', qty: 1, uuid: uuidv4() });
+    itms.push(item);
 
     form.setValues({ name: form.values.name, items: itms });
 
@@ -197,46 +198,43 @@ const AddList = () => {
         />
         <h2>Items</h2>
         <ItemsWrapper ref={itemsRef}>
-          {items.map((item, index) => {
-            return (
-              <Item key={item.uuid}>
-                <Input
-                  name={`items.${index}.name`}
-                  label="Item Name"
-                  type="text"
-                  value={form.values.items?.[index]?.name}
-                  error={(form.errors.items?.[index] as ForName)?.name}
-                  showError={
-                    (form.errors.items?.[index] as ForName)?.name &&
-                    form.touched.items?.[index]?.name
-                  }
-                  onChange={form.handleChange}
-                  onBlur={form.handleBlur}
-                />
-                <Input
-                  name={`items.${index}.qty`}
-                  label="Item Quantity"
-                  type="number"
-                  value={form.values.items?.[index]?.qty}
-                  error={(form.errors.items?.[index] as ForQTY)?.qty}
-                  showError={
-                    (form.errors.items?.[index] as ForQTY)?.qty &&
-                    form.touched.items?.[index]?.qty
-                  }
-                  onChange={form.handleChange}
-                  onBlur={form.handleBlur}
-                />
-                <BaseButton type="button" onClick={removeItem(index)}>
-                  <XImage />
-                </BaseButton>
-              </Item>
-            );
-          })}
+          {items.map((item, index) => (
+            <Item key={item.uuid}>
+              <Input
+                name={`items.${index}.name`}
+                label="Item Name"
+                type="text"
+                value={form.values.items?.[index]?.name}
+                error={(form.errors.items?.[index] as ForName)?.name}
+                showError={
+                  (form.errors.items?.[index] as ForName)?.name &&
+                  form.touched.items?.[index]?.name
+                }
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+              />
+              <Input
+                name={`items.${index}.qty`}
+                label="Item Quantity"
+                type="number"
+                value={form.values.items?.[index]?.qty}
+                error={(form.errors.items?.[index] as ForQTY)?.qty}
+                showError={
+                  (form.errors.items?.[index] as ForQTY)?.qty &&
+                  form.touched.items?.[index]?.qty
+                }
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+              />
+              <BaseButton type="button" onClick={removeItem(index)}>
+                <XImage />
+              </BaseButton>
+            </Item>
+          ))}
         </ItemsWrapper>
         <AddItemButton type="button" onClick={addItem}>
           Add Item
         </AddItemButton>
-
         <SubmitButton type="submit">Submit</SubmitButton>
       </form>
     </Wrapper>

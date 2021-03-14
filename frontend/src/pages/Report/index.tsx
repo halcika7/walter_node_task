@@ -37,9 +37,7 @@ const Report = () => {
     dispatch(getReport({ startDate, endDate }));
   };
 
-  const resetMessage = () => {
-    dispatch(setListMessage('', null));
-  };
+  const resetMessage = () => dispatch(setListMessage('', null));
 
   useEffect(() => {
     return () => {
