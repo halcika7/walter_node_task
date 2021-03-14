@@ -1,0 +1,54 @@
+{
+  "presets": [
+    "@babel/preset-env",
+    ["@babel/preset-typescript", { "onlyRemoveTypeImports": true }]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    ["@babel/plugin-proposal-class-properties", { "loose": false }],
+    "@babel/plugin-syntax-dynamic-import",
+    [
+      "babel-plugin-root-import",
+      {
+        "paths": [
+          {
+            "rootPathSuffix": "./src/configs/index",
+            "rootPathPrefix": "@env"
+          },
+          {
+            "rootPathSuffix": "./src/controllers",
+            "rootPathPrefix": "@controller/"
+          },
+          {
+            "rootPathSuffix": "./src/middlewares",
+            "rootPathPrefix": "@middleware/"
+          },
+          {
+            "rootPathSuffix": "./src/db/models",
+            "rootPathPrefix": "@model/"
+          },
+          {
+            "rootPathSuffix": "./src/services",
+            "rootPathPrefix": "@service/"
+          },
+          {
+            "rootPathSuffix": "./src/repositories",
+            "rootPathPrefix": "@repository/"
+          },
+          {
+            "rootPathSuffix": "./src/utils/exceptions/index",
+            "rootPathPrefix": "@exception"
+          },
+          {
+            "rootPathSuffix": "./src/utils/validations",
+            "rootPathPrefix": "@validation/"
+          },
+          {
+            "rootPathSuffix": "./src/utils/codes",
+            "rootPathPrefix": "@codes"
+          }
+        ]
+      }
+    ]
+  ]
+}

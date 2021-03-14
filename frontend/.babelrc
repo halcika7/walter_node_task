@@ -1,0 +1,64 @@
+{
+  "presets": [
+    "@babel/preset-env",
+    ["@babel/preset-typescript", { "onlyRemoveTypeImports": true }]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    [
+      "babel-plugin-root-import",
+      {
+        "paths": [
+          {
+            "rootPathSuffix": "./src/lib/axios",
+            "rootPathPrefix": "@axios"
+          },
+          {
+            "rootPathSuffix": "./src/lib/validations",
+            "rootPathPrefix": "@validations/"
+          },
+          {
+            "rootPathSuffix": "./src/lib/hooks",
+            "rootPathPrefix": "@hooks/"
+          },
+          {
+            "rootPathSuffix": "./src/redux/actions/index",
+            "rootPathPrefix": "@actions"
+          },
+          {
+            "rootPathSuffix": "./src/assets/images",
+            "rootPathPrefix": "@images/"
+          },
+          {
+            "rootPathSuffix": "./src/components",
+            "rootPathPrefix": "@components/"
+          },
+          {
+            "rootPathSuffix": "./src/pages",
+            "rootPathPrefix": "@pages/"
+          },
+          {
+            "rootPathSuffix": "./src/styled",
+            "rootPathPrefix": "@styled/"
+          },
+          {
+            "rootPathSuffix": "./src/redux/types",
+            "rootPathPrefix": "@ctypes/"
+          },
+          {
+            "rootPathSuffix": "./src/redux/reducers",
+            "rootPathPrefix": "@reducers/"
+          },
+          {
+            "rootPathSuffix": "./src/redux/AppThunkDispatch",
+            "rootPathPrefix": "@dispatch"
+          },
+          {
+            "rootPathSuffix": "./src/redux/index",
+            "rootPathPrefix": "@store"
+          }
+        ]
+      }
+    ]
+  ]
+}
