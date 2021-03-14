@@ -1,6 +1,6 @@
-import { validate } from '../../middlewares/bodyValidation';
+import { validate } from '@middleware/bodyValidation';
 import { body } from 'express-validator';
-import { ListRepository } from '../../repositories/List';
+import { ListRepository } from '@repository/List';
 
 const nameCheck = body('name')
   .not()
@@ -34,9 +34,6 @@ const isNameValidForUpdate = body('name')
   .withMessage('List with provided name already exists');
 
 const itemValidations = [
-  body('items.*.name')
-    .isAlphanumeric()
-    .withMessage('Name must be alphanumeric value'),
   body('items.*.name').not().isEmpty().withMessage('Name is required'),
   body('items.*.name')
     .isLength({ max: 100 })

@@ -2,6 +2,7 @@ import * as yup from 'yup';
 
 const email = yup
   .string()
+  .trim()
   .email('Email is not valid')
   .max(100, 'Email cannot exceed 100 characters')
   .required('Email is required');

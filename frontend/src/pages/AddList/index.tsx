@@ -61,7 +61,8 @@ const AddList = () => {
   const { id } = useParams() as { id: string | undefined };
 
   const onSubmit = (values: PostListData) => {
-    const mapped = values.items.reduce((state, { name, qty }) => {
+    const castValues = (ListValidation.cast(values) as unknown) as PostListData;
+    const mapped = castValues.items.reduce((state, { name, qty }) => {
       const found = state[`${name}`];
       let quantity = qty;
 
@@ -80,7 +81,9 @@ const AddList = () => {
 
     dispatch(clearListErrors());
 
-    const data = { ...values, items };
+    const data = { ...castValues, items };
+
+    form.setValues(data);
 
     if (!id) {
       dispatch(addNewList(data));
@@ -142,9 +145,7 @@ const AddList = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (id) {
-      dispatch(getList(id));
-    }
+    if (id) dispatch(getList(id));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -159,9 +160,7 @@ const AddList = () => {
   }, [setValues, id]);
 
   useEffect(() => {
-    if (id) {
-      setItems(list.items);
-    }
+    if (id) setItems(list.items);
   }, [id, list]);
 
   if (id && errorMessages.includes(message)) {

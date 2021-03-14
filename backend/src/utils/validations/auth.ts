@@ -1,6 +1,6 @@
-import { validate } from '../../middlewares/bodyValidation';
+import { validate } from '@middleware/bodyValidation';
 import { check } from 'express-validator';
-import { UserRepository } from '../../repositories/User';
+import { UserRepository } from '@repository/User';
 
 const passwordValidation = (name: string, rsp: string) =>
   check(name)

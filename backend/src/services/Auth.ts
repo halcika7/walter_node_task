@@ -2,7 +2,7 @@ import {
   BadRequestException,
   InternalServerErrorException,
   UnauthorizedException,
-} from '../utils/exceptions';
+} from '@exception';
 import { JWTService } from './JWT';
 import { Response } from 'express';
 import { CookieService } from './Cookie';
@@ -57,5 +57,3 @@ export const refresh = async (token: string, res: Response) => {
 
   return { accessToken: JWTService.signToken(tokenObj) };
 };
-
-export const logout = (res: Response) => CookieService.removeRefreshToken(res);

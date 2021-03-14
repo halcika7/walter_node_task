@@ -2,6 +2,7 @@ import { Configuration } from '@env';
 import { NextFunction, Request, Response } from 'express';
 import * as AuthService from '@service/Auth';
 import { HTTPCodes } from '@codes';
+import { CookieService } from '@service/Cookie';
 
 export const register = async (
   req: Request,
@@ -42,6 +43,7 @@ export const refresh = async (
 
     return res.status(HTTPCodes.OK).json({ accessToken });
   } catch (error) {
+    CookieService.removeRefreshToken(res);
     if (req.query.firstCheck === 'true') {
       return res.status(HTTPCodes.OK).json();
     }
@@ -50,6 +52,6 @@ export const refresh = async (
 };
 
 export const logout = (_: Request, res: Response) => {
-  AuthService.logout(res);
+  CookieService.removeRefreshToken(res);
   return res.status(HTTPCodes.OK).json({ message: 'ok' });
 };
