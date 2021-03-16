@@ -3,7 +3,7 @@ import { Redirect, Route } from 'react-router-dom';
 import Spinner from '@components/spinner';
 
 interface Props {
-  Component: FC<Record<string, any>>;
+  Component: FC<Record<string, unknown>>;
   redirect?: boolean;
   exact: boolean;
   path: string;

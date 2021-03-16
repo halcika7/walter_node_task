@@ -105,8 +105,7 @@ const Profile = () => {
             />
             <ConfirmButton
               disabled={!form.isValid || form.isSubmitting}
-              type="button"
-              onClick={form.handleSubmit as any}
+              type="submit"
             >
               Confirm {form.isSubmitting && <ButtonSpinner />}
             </ConfirmButton>

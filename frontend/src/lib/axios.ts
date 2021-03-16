@@ -9,7 +9,7 @@ const ax = Axios.create({
   baseURL: process.env.REACT_APP_BACKEND_URL,
 });
 
-const rejectPromise = (error: Record<string, any> | string) =>
+const rejectPromise = (error: Record<string, unknown> | string) =>
   Promise.resolve(error);
 
 ax.interceptors.request.use(config => {

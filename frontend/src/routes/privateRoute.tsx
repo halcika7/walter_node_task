@@ -3,13 +3,13 @@ import { Redirect, Route } from 'react-router-dom';
 import Spinner from '@components/spinner';
 
 interface Props {
-  Component: FC<Record<string, any>>;
+  Component: FC<Record<string, unknown>>;
   isAuthenticated: boolean;
   exact: boolean;
   path: string;
 }
 
-const PrivateRoute = ({ Component, isAuthenticated, ...rest }: Props) => (
+const PrivateRoute: FC<Props> = ({ Component, isAuthenticated, ...rest }) => (
   <Suspense fallback={<Spinner />}>
     <Route
       {...rest}
